@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -27,7 +27,6 @@ namespace XepLichGiangVien.Controllers
             ViewBag.MaKhoa = new SelectList(db.Khoas, "MaKhoa", "TenKhoa");
             ViewBag.MaPhong = new SelectList(db.PhongHocs, "MaPhong", "TenPhong");
 
-            // Gửi kỳ hiện tại sang View
             int month = DateTime.Now.Month;
             ViewBag.KyHienTai = (month >= 1 && month <= 6) ? "Kỳ Lẻ" : "Kỳ Chẵn";
 
@@ -67,13 +66,19 @@ namespace XepLichGiangVien.Controllers
             }
             else
             {
-                TempData["Error"] = "Không tìm được khung giờ phù hợp!";
+                if (lop.SoLuongSinhVien > db.PhongHocs.Find(maPhong)?.SoLuongChoNgoi)
+                {
+                    TempData["Error"] = "Phòng học không đủ chỗ cho số lượng sinh viên!";
+                }
+                else
+                {
+                    TempData["Error"] = "Không tìm được khung giờ phù hợp!";
+                }
             }
 
             return RedirectToAction("Index");
         }
 
-        // AJAX: Lấy danh sách Giảng Viên theo Khoa
         public JsonResult GetGiangViens(string maKhoa)
         {
             var giangViens = db.GiangViens
@@ -84,7 +89,6 @@ namespace XepLichGiangVien.Controllers
             return Json(giangViens, JsonRequestBehavior.AllowGet);
         }
 
-        // AJAX: Lấy danh sách Lớp Học Phần theo Giảng Viên
         public JsonResult GetLopHocPhans(string maGV)
         {
             var lhps = db.LopHocPhans
@@ -95,7 +99,6 @@ namespace XepLichGiangVien.Controllers
             return Json(lhps, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: LichDays
         public ActionResult Index()
         {
             if ((int)Session["MaVaiTro"] != 0)
@@ -111,7 +114,6 @@ namespace XepLichGiangVien.Controllers
             return View(lich);
         }
 
-        // ======= THUẬT TOÁN XẾP LỊCH =======
         private LichDay GenerateLichDay(string maLHP, string maPhong)
         {
             var lop = db.LopHocPhans.Find(maLHP);
@@ -120,10 +122,15 @@ namespace XepLichGiangVien.Controllers
             var phong = db.PhongHocs.Find(maPhong);
             if (phong == null) return null;
 
+            // Kiểm tra số lượng sinh viên
+            if (lop.SoLuongSinhVien > phong.SoLuongChoNgoi)
+            {
+                return null;
+            }
+
             string maGV = lop.MaGV;
             int soTiet = lop.SoTietMoiTuan;
 
-            // Xác định kỳ hiện tại
             int month = DateTime.Now.Month;
             bool isKyLe = (month >= 7 && month <= 12);
 
@@ -133,7 +140,7 @@ namespace XepLichGiangVien.Controllers
             LichDay bestSlot = null;
             int bestScore = int.MinValue;
 
-            for (int thu = 2; thu <= 7; thu++) // Thứ 2 -> Thứ 7
+            for (int thu = 2; thu <= 7; thu++)
             {
                 for (int tietBD = 1; tietBD <= 10 - soTiet + 1; tietBD++)
                 {
@@ -182,31 +189,20 @@ namespace XepLichGiangVien.Controllers
         {
             int score = 0;
 
-            // Ưu tiên buổi sáng
-            if (tietBD <= 5)
-                score += 5;
+            if (tietBD <= 5) score += 5;
+            if (tietBD == 1 || tietBD == 4) score += 2;
+            if (thu == 2 || thu == 4 || thu == 6) score += 2;
 
-            // Ưu tiên tiết đầu buổi
-            if (tietBD == 1 || tietBD == 4)
-                score += 2;
-
-            // Ưu tiên thứ 2, 4, 6
-            if (thu == 2 || thu == 4 || thu == 6)
-                score += 2;
-
-            // Ưu tiên lịch liền tiết
             bool coTietLien = db.LichDays.Any(ld =>
                 ld.LopHocPhan.MaGV == maGV &&
                 ld.Thu == thu &&
                 (ld.TietKetThuc + 1 == tietBD || ld.TietBatDau - 1 == tietKT)
             );
-            if (coTietLien)
-                score += 3;
+            if (coTietLien) score += 3;
 
             return score;
         }
 
-        // GET: LichDays/XemLich
         public ActionResult XemLich()
         {
             if (Session["MaVaiTro"] == null || (int)Session["MaVaiTro"] != 1)
@@ -223,6 +219,31 @@ namespace XepLichGiangVien.Controllers
                 .ToList();
 
             return View(lich);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            LichDay lichDay = db.LichDays.Find(id);
+            if (lichDay == null)
+            {
+                return HttpNotFound();
+            }
+            return View(lichDay);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            LichDay lichDay = db.LichDays.Find(id);
+            db.LichDays.Remove(lichDay);
+            db.SaveChanges();
+            TempData["Message"] = "Xóa lịch thành công!";
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
