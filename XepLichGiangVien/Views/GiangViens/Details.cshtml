@@ -1,27 +1,89 @@
-﻿@model XepLichGiangVien.Models.GiangVien
+@model XepLichGiangVien.Models.GiangVien
 
 @{
-    ViewBag.Title = "Chi Tiết Giảng Viên";
+    ViewBag.Title = "Chi tiết giảng viên";
 }
 
-<div class="container my-5">
-    <div class="card shadow-lg rounded-4 border-0">
-        <div class="card-header bg-gradient bg-primary text-white rounded-top-4">
-            <h2 class="mb-0"><i class="bi bi-person-badge-fill me-2"></i>Chi Tiết Giảng Viên</h2>
+<!-- Bootstrap & Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<style>
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card-custom {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 50px auto;
+    }
+
+    .card-header {
+        background-color: #0d6efd;
+        color: white;
+        font-weight: 600;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 16px;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 4px;
+    }
+
+    .detail-value {
+        margin-bottom: 16px;
+    }
+
+    .btn-main {
+        background-color: #0d6efd;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+        .btn-main:hover {
+            background-color: #0b5ed7;
+        }
+
+    .btn-secondary {
+        border-radius: 10px;
+    }
+</style>
+
+<div class="card card-custom">
+    <div class="card-header">
+        <i class="bi bi-person-lines-fill me-2"></i> Thông tin giảng viên
+    </div>
+    <div class="card-body p-4">
+        <div class="mb-3">
+            <div class="detail-label">Tên giảng viên</div>
+            <div class="detail-value">@Html.DisplayFor(model => model.TenGV)</div>
+
+            <div class="detail-label">Email</div>
+            <div class="detail-value">@Html.DisplayFor(model => model.Email)</div>
+
+            <div class="detail-label">Số điện thoại</div>
+            <div class="detail-value">@Html.DisplayFor(model => model.SoDienThoai)</div>
+
+            <div class="detail-label">Khoa</div>
+            <div class="detail-value">@Html.DisplayFor(model => model.Khoa.TenKhoa)</div>
         </div>
-        <div class="card-body p-5">
-            <dl class="row fs-5">
-                <dt class="col-md-4 text-muted">Tên Giảng Viên</dt>
-                <dd class="col-md-8 fw-bold">@Html.DisplayFor(model => model.TenGV)</dd>
 
-                <dt class="col-md-4 text-muted">Khoa</dt>
-                <dd class="col-md-8 fw-bold">@Html.DisplayFor(model => model.Khoa.TenKhoa)</dd>
-            </dl>
-
-            <div class="mt-5 d-flex gap-3">
-                @Html.ActionLink("✏️ Chỉnh sửa", "Edit", new { id = Model.MaGV }, new { @class = "btn btn-warning btn-lg rounded-pill px-4 shadow-sm" })
-                @Html.ActionLink("↩️ Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg rounded-pill px-4 shadow-sm" })
-            </div>
+        <div class="d-flex justify-content-between mt-4">
+            <a href="@Url.Action("Edit", new { id = Model.MaGV })" class="btn btn-main">
+                <i class="bi bi-pencil-square me-1"></i> Sửa
+            </a>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Quay lại
+            </a>
         </div>
     </div>
 </div>
