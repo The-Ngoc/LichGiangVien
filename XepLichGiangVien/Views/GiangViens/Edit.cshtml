@@ -1,46 +1,99 @@
-﻿@model XepLichGiangVien.Models.GiangVien
+@model XepLichGiangVien.Models.GiangVien
 
 @{
     ViewBag.Title = "Chỉnh sửa Giảng Viên";
 }
 
-<div class="container my-5">
-    <div class="card shadow-lg rounded-4 border-0">
-        <div class="card-header bg-primary text-white rounded-top-4">
-            <h2 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Chỉnh sửa Giảng Viên</h2>
-        </div>
-        <div class="card-body p-5">
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+<!-- Bootstrap & Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
-                @Html.HiddenFor(model => model.MaGV)
+<style>
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+    .card-custom {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 50px auto;
+    }
 
-                <div class="mb-4">
-                    @Html.LabelFor(model => model.TenGV, htmlAttributes: new { @class = "form-label fw-bold" })
-                    @Html.EditorFor(model => model.TenGV, new { htmlAttributes = new { @class = "form-control form-control-lg rounded-3" } })
-                    @Html.ValidationMessageFor(model => model.TenGV, "", new { @class = "text-danger" })
-                </div>
+    .card-header {
+        background-color: #0d6efd;
+        color: white;
+        font-weight: 600;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 16px;
+    }
 
-                <div class="mb-4">
-                    @Html.LabelFor(model => model.MaKhoa, "Khoa", htmlAttributes: new { @class = "form-label fw-bold" })
-                    @Html.DropDownList("MaKhoa", null, htmlAttributes: new { @class = "form-select form-select-lg rounded-3" })
-                    @Html.ValidationMessageFor(model => model.MaKhoa, "", new { @class = "text-danger" })
-                </div>
+    .form-control, .form-select {
+        border-radius: 12px;
+        height: 44px;
+    }
 
-                <div class="d-flex gap-3">
-                    <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 shadow-sm">
-                        💾 Lưu lại
-                    </button>
-                    @Html.ActionLink("↩️ Quay lại", "Index", null, new { @class = "btn btn-outline-secondary btn-lg rounded-pill px-4 shadow-sm" })
-                </div>
-            }
-        </div>
+    .btn-main {
+        background-color: #0d6efd;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+        .btn-main:hover {
+            background-color: #0b5ed7;
+        }
+
+    .btn-secondary {
+        border-radius: 10px;
+    }
+</style>
+
+<div class="card card-custom">
+    <div class="card-header">
+        <i class="bi bi-pencil-square me-2"></i> Chỉnh sửa thông tin giảng viên
+    </div>
+    <div class="card-body p-4">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.MaGV)
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.TenGV, "Tên Giảng Viên", htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.TenGV, new { @class = "form-control", placeholder = "Nhập tên giảng viên" })
+                @Html.ValidationMessageFor(model => model.TenGV, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.MaKhoa, "Khoa", htmlAttributes: new { @class = "form-label" })
+                @Html.DropDownList("MaKhoa", null, "Chọn khoa", new { @class = "form-select" })
+                @Html.ValidationMessageFor(model => model.MaKhoa, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "example@domain.com" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.SoDienThoai, "Số điện thoại", htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(model => model.SoDienThoai, new { @class = "form-control", placeholder = "Nhập số điện thoại" })
+                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>
+                <button type="submit" class="btn btn-main">
+                    <i class="bi bi-save me-1"></i> Lưu thay đổi
+                </button>
+            </div>
+        }
     </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
