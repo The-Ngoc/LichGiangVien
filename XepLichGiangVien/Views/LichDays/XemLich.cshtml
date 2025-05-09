@@ -1,4 +1,4 @@
-﻿@model IEnumerable<XepLichGiangVien.Models.LichDay>
+@model IEnumerable<XepLichGiangVien.Models.LichDay>
 
 @{
     ViewBag.Title = "Lịch Dạy Của Tôi";
@@ -14,10 +14,8 @@
                     <th>Môn học</th>
                     <th>Phòng học</th>
                     <th>Thứ</th>
-                    <th>Tiết bắt đầu</th>
-                    <th>Tiết kết thúc</th>
-                    <th>Tuần bắt đầu</th>
-                    <th>Tuần kết thúc</th>
+                    <th>Tiết</th>
+                    <th>Tuần</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,10 +25,8 @@
                         <td>@item.LopHocPhan.TenMH</td>
                         <td>@item.PhongHoc.TenPhong</td>
                         <td>Thứ @item.Thu</td>
-                        <td>@item.TietBatDau</td>
-                        <td>@item.TietKetThuc</td>
-                        <td>@item.TuanBatDau</td>
-                        <td>@item.TuanKetThuc</td>
+                        <td>@item.TietBatDau - @item.TietKetThuc</td>
+                        <td>@item.TuanBatDau - @item.TuanKetThuc</td>
                     </tr>
                 }
             </tbody>
