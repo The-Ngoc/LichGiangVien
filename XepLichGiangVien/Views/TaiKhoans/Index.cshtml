@@ -1,37 +1,87 @@
-﻿@model IEnumerable<XepLichGiangVien.Models.TaiKhoan>
+@model IEnumerable<XepLichGiangVien.Models.TaiKhoan>
 
 @{
     ViewBag.Title = "Danh sách tài khoản";
 }
 
-<h2>Danh sách tài khoản</h2>
+<!-- Thêm liên kết đến Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
 
-<p>
-    @Html.ActionLink("Tạo tài khoản mới", "Create")
-</p>
+<style>
+    .table-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.TenDangNhap)</th>
-            <th>@Html.DisplayNameFor(model => model.GiangVien.TenGV)</th>
-            <th>@Html.DisplayNameFor(model => model.VaiTro.TenVaiTro)</th>
-            <th>Chức năng</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.TenDangNhap)</td>
-                <td>@Html.DisplayFor(modelItem => item.GiangVien.TenGV)</td>
-                <td>@Html.DisplayFor(modelItem => item.VaiTro.TenVaiTro)</td>
-                <td>
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.TenDangNhap }) |
-                    @Html.ActionLink("Chi tiết", "Details", new { id = item.TenDangNhap }) |
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.TenDangNhap })
-                </td>
-            </tr>
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .btn-custom {
+        margin-right: 5px;
+    }
+
+    .btn-create {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
         }
-    </tbody>
-</table>
+
+    h2 {
+        color: #343a40;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="table-container">
+    <h2>Danh sách tài khoản</h2>
+
+    <p class="text-end">
+        <a href="@Url.Action("Create")" class="btn btn-create btn-custom text-white">
+            <i class="bi bi-plus-circle"></i> Tạo tài khoản mới
+        </a>
+    </p>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Tên đăng nhập</th>
+                <th>Tên giảng viên</th>
+                <th>Vai trò</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.TenDangNhap)</td>
+                    <td>@Html.DisplayFor(modelItem => item.GiangVien.TenGV)</td>
+                    <td>@Html.DisplayFor(modelItem => item.VaiTro.TenVaiTro)</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.TenDangNhap })" class="btn btn-warning btn-sm btn-custom">
+                            <i class="bi bi-pencil-square"></i> Sửa
+                        </a>
+                        <a href="@Url.Action("Details", new { id = item.TenDangNhap })" class="btn btn-info btn-sm btn-custom">
+                            <i class="bi bi-info-circle"></i> Chi tiết
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.TenDangNhap })" class="btn btn-danger btn-sm btn-custom">
+                            <i class="bi bi-trash"></i> Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
