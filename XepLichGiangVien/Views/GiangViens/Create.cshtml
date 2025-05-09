@@ -1,0 +1,84 @@
+﻿@model XepLichGiangVien.Models.GiangVien
+
+@{
+    ViewBag.Title = "Tạo mới Giảng Viên";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" />
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-success text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Tạo mới Giảng Viên</h2>
+                </div>
+                <div class="card-body p-4">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "createForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <div class="mb-3">
+                            <label class="form-label" for="MaGV">Mã Giảng Viên</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person-badge"></i>
+                                </span>
+                                @Html.EditorFor(model => model.MaGV, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập mã giảng viên" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="TenGV">Tên Giảng Viên</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                @Html.EditorFor(model => model.TenGV, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên giảng viên" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TenGV, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" for="MaKhoa">Thuộc Khoa</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-building"></i>
+                                </span>
+                                @Html.DropDownList("MaKhoa", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaKhoa, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="d-grid mb-2">
+                            <button type="submit" class="btn btn-success btn-lg" id="btnSubmit">
+                                <span id="btnSubmitText">Lưu thông tin</span>
+                                <span id="btnSubmitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                        <div class="d-grid">
+                            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#createForm').on('submit', function () {
+                $('#btnSubmit').attr('disabled', 'disabled');
+                $('#btnSubmitText').text('Đang lưu...');
+                $('#btnSubmitSpinner').removeClass('d-none');
+            });
+        });
+    </script>
+}

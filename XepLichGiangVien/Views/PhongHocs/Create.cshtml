@@ -1,0 +1,54 @@
+﻿@model XepLichGiangVien.Models.PhongHoc
+
+@{
+    ViewBag.Title = "Tạo mới Phòng Học";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Tạo mới Phòng Học</h2>
+                </div>
+                <div class="card-body p-4">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.MaPhong, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.MaPhong, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MaPhong, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.TenPhong, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.TenPhong, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TenPhong, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.SoLuongChoNgoi, htmlAttributes: new { @class = "form-label" })
+                            @Html.EditorFor(model => model.SoLuongChoNgoi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.SoLuongChoNgoi, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Tạo mới
+                            </button>
+                            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

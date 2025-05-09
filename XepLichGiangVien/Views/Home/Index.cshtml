@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // hoặc để trống nếu bạn không dùng layout
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #ece9e6, #ffffff);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .homepage-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        text-align: center;
+    }
+
+    .homepage-title {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .homepage-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: #666;
+    }
+
+    .login-button {
+        padding: 0.75rem 2rem;
+        font-size: 1.2rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .login-button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+</style>
+
+<div class="homepage-container">
+    <div class="homepage-title">Chào mừng bạn!</div>
+    <div class="homepage-subtitle">Ứng Dụng Xếp Lịch Tự Động</div>
+
+    @if (Session["TenDangNhap"] != null)
+    {
+        @Html.ActionLink(
+            "Đăng xuất",
+            "Logout", // Action Logout
+            "Home",   // Controller Home
+            routeValues: null,
+            htmlAttributes: new { @class = "login-button" }
+        )
+    }
+    else
+    {
+        @Html.ActionLink(
+            "Đăng nhập",
+            "Login", // Action Login
+            "Home",  // Controller Home
+            routeValues: null,
+            htmlAttributes: new { @class = "login-button" }
+        )
+    }
+</div>

@@ -1,0 +1,39 @@
+﻿@model XepLichGiangVien.Models.PhongHoc
+
+@{
+    ViewBag.Title = "Chi tiết Phòng Học";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-info text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Chi tiết Phòng Học</h2>
+                </div>
+                <div class="card-body p-4">
+                    <dl class="row">
+                        <dt class="col-sm-4 text-end">
+                            @Html.DisplayNameFor(model => model.TenPhong)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.TenPhong)
+                        </dd>
+
+                        <dt class="col-sm-4 text-end">
+                            @Html.DisplayNameFor(model => model.SoLuongChoNgoi)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.SoLuongChoNgoi)
+                        </dd>
+                    </dl>
+
+                    <div class="d-grid gap-2">
+                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaPhong }, new { @class = "btn btn-info btn-lg text-white" })
+                        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

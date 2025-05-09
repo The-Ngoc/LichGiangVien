@@ -1,0 +1,42 @@
+﻿@model IEnumerable<XepLichGiangVien.Models.GiangVien>
+
+@{
+    ViewBag.Title = "Danh sách Giảng Viên";
+}
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-people-fill me-2"></i>Danh sách Giảng Viên</h2>
+        @Html.ActionLink("➕ Thêm mới", "Create", null, new { @class = "btn btn-success btn-lg rounded-pill shadow-sm" })
+    </div>
+
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th class="text-center">Tên Giảng Viên</th>
+                        <th class="text-center">Khoa</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.TenGV)</td>
+                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.Khoa.TenKhoa)</td>
+                            <td class="align-middle text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    @Html.ActionLink("✏️", "Edit", new { id = item.MaGV }, new { @class = "btn btn-warning btn-sm rounded-pill" })
+                                    @Html.ActionLink("🔍", "Details", new { id = item.MaGV }, new { @class = "btn btn-info btn-sm rounded-pill text-white" })
+                                    @Html.ActionLink("🗑️", "Delete", new { id = item.MaGV }, new { @class = "btn btn-danger btn-sm rounded-pill" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

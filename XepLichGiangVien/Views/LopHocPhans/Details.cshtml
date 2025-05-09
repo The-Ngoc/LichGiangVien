@@ -1,0 +1,37 @@
+﻿@model XepLichGiangVien.Models.LopHocPhan
+
+@{
+    ViewBag.Title = "Chi tiết Lớp Học Phần";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-info text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Chi tiết Lớp Học Phần</h2>
+                </div>
+                <div class="card-body p-4">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 text-muted">Tên Môn Học</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.TenMH)</dd>
+
+                        <dt class="col-sm-4 text-muted">Số Tín Chỉ</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.SoTinChi)</dd>
+
+                        <dt class="col-sm-4 text-muted">Số Tiết Mỗi Tuần</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.SoTietMoiTuan)</dd>
+
+                        <dt class="col-sm-4 text-muted">Giảng Viên Phụ Trách</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.GiangVien.TenGV)</dd>
+                    </dl>
+
+                    <div class="mt-4 d-flex justify-content-between">
+                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaLHP }, new { @class = "btn btn-warning btn-lg" })
+                        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

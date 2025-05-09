@@ -1,0 +1,106 @@
+﻿@model XepLichGiangVien.Models.LopHocPhan
+
+@{
+    ViewBag.Title = "Tạo mới Lớp Học Phần";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" />
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-warning text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Tạo mới Lớp Học Phần</h2>
+                </div>
+                <div class="card-body p-4">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "createForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <div class="mb-3">
+                            <label class="form-label" for="MaLHP">Mã Lớp Học Phần</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-hash"></i>
+                                </span>
+                                @Html.EditorFor(model => model.MaLHP, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập mã lớp học phần" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaLHP, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="TenMH">Tên Môn Học</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-book"></i>
+                                </span>
+                                @Html.EditorFor(model => model.TenMH, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên môn học" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TenMH, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="SoTinChi">Số Tín Chỉ</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-award"></i>
+                                </span>
+                                @Html.EditorFor(model => model.SoTinChi, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số tín chỉ" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.SoTinChi, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="SoTietMoiTuan">Số Tiết Mỗi Tuần</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-calendar-week"></i>
+                                </span>
+                                @Html.EditorFor(model => model.SoTietMoiTuan, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập số tiết mỗi tuần" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.SoTietMoiTuan, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" for="MaGV">Giảng Viên Phụ Trách</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                @Html.DropDownList("MaGV", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaGV, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="d-grid mb-2">
+                            <button type="submit" class="btn btn-warning btn-lg text-white" id="btnSubmit">
+                                <span id="btnSubmitText">Lưu thông tin</span>
+                                <span id="btnSubmitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                        <div class="d-grid">
+                            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#createForm').on('submit', function () {
+                $('#btnSubmit').attr('disabled', 'disabled');
+                $('#btnSubmitText').text('Đang lưu...');
+                $('#btnSubmitSpinner').removeClass('d-none');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,42 @@
+﻿@model XepLichGiangVien.Models.TaiKhoan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TaiKhoan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MatKhau)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MatKhau)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiangVien.TenGV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiangVien.TenGV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VaiTro.TenVaiTro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VaiTro.TenVaiTro)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TenDangNhap }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

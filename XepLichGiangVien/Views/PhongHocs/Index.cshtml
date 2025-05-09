@@ -1,0 +1,66 @@
+﻿@model IEnumerable<XepLichGiangVien.Models.PhongHoc>
+
+@{
+    ViewBag.Title = "Danh Sách Phòng Học";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Danh Sách Phòng Học</h2>
+        <a href="@Url.Action("Create", "PhongHocs")" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle me-2"></i> Tạo Mới
+        </a>
+    </div>
+
+    <div class="card shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th scope="col">Tên Phòng</th>
+                            <th scope="col">Số Lượng Chỗ Ngồi</th>
+                            <th scope="col">Hành Động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.TenPhong)</td>
+                                    <td class="text-center">@Html.DisplayFor(modelItem => item.SoLuongChoNgoi)</td>
+                                    <td class="text-center">
+                                        <a href="@Url.Action("Edit", "PhongHocs", new { id = item.MaPhong })" class="btn btn-warning btn-sm mx-1">
+                                            <i class="bi bi-pencil-square"></i> Sửa
+                                        </a>
+                                        <a href="@Url.Action("Details", "PhongHocs", new { id = item.MaPhong })" class="btn btn-info btn-sm mx-1">
+                                            <i class="bi bi-eye"></i> Xem
+                                        </a>
+                                        <a href="@Url.Action("Delete", "PhongHocs", new { id = item.MaPhong })"
+                                           class="btn btn-danger btn-sm mx-1">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="text-center" colspan="3">
+                                    <div class="alert alert-info mb-0">Không có dữ liệu để hiển thị.</div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+}

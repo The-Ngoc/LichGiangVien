@@ -1,0 +1,46 @@
+﻿@model XepLichGiangVien.Models.LopHocPhan
+
+@{
+    ViewBag.Title = "Xóa Lớp Học Phần";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-danger text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Xóa Lớp Học Phần</h2>
+                </div>
+                <div class="card-body p-4">
+                    <h4 class="text-center mb-4">Bạn có chắc chắn muốn xóa lớp học phần này không?</h4>
+
+                    <dl class="row mb-4">
+                        <dt class="col-sm-4 text-muted">Tên Môn Học</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.TenMH)</dd>
+
+                        <dt class="col-sm-4 text-muted">Số Tín Chỉ</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.SoTinChi)</dd>
+
+                        <dt class="col-sm-4 text-muted">Số Tiết Mỗi Tuần</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.SoTietMoiTuan)</dd>
+
+                        <dt class="col-sm-4 text-muted">Giảng Viên Phụ Trách</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.GiangVien.TenGV)</dd>
+                    </dl>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-trash3-fill"></i> Xóa
+                            </button>
+                            @Html.ActionLink("Hủy bỏ", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

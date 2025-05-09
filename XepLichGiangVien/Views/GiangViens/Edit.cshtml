@@ -1,0 +1,46 @@
+﻿@model XepLichGiangVien.Models.GiangVien
+
+@{
+    ViewBag.Title = "Chỉnh sửa Giảng Viên";
+}
+
+<div class="container my-5">
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-header bg-primary text-white rounded-top-4">
+            <h2 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Chỉnh sửa Giảng Viên</h2>
+        </div>
+        <div class="card-body p-5">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.MaGV)
+
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                <div class="mb-4">
+                    @Html.LabelFor(model => model.TenGV, htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.EditorFor(model => model.TenGV, new { htmlAttributes = new { @class = "form-control form-control-lg rounded-3" } })
+                    @Html.ValidationMessageFor(model => model.TenGV, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-4">
+                    @Html.LabelFor(model => model.MaKhoa, "Khoa", htmlAttributes: new { @class = "form-label fw-bold" })
+                    @Html.DropDownList("MaKhoa", null, htmlAttributes: new { @class = "form-select form-select-lg rounded-3" })
+                    @Html.ValidationMessageFor(model => model.MaKhoa, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn btn-success btn-lg rounded-pill px-4 shadow-sm">
+                        💾 Lưu lại
+                    </button>
+                    @Html.ActionLink("↩️ Quay lại", "Index", null, new { @class = "btn btn-outline-secondary btn-lg rounded-pill px-4 shadow-sm" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

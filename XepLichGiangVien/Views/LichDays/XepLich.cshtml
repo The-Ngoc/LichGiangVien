@@ -1,0 +1,156 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Xếp Lịch";
+}
+
+<!-- CSS riêng cho form Xếp Lịch -->
+<style>
+    .glass-card {
+        width: 100%;
+        max-width: 450px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 2rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        font-weight: 600;
+    }
+
+    .custom-select {
+        padding: 12px 16px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+    }
+
+    .custom-btn {
+        background: linear-gradient(90deg, #3b82f6, #2563eb);
+        border: none;
+        padding: 14px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        width: 100%;
+        color: white;
+    }
+
+        .custom-btn:hover {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 20px rgba(37, 99, 235, 0.4);
+        }
+
+    .back-btn {
+        margin-top: 10px;
+        background-color: #6c757d;
+        color: white;
+        font-weight: 500;
+        border-radius: 12px;
+        padding: 12px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+        .back-btn:hover {
+            background-color: #495057;
+            transform: translateY(-2px);
+        }
+
+    body {
+        background-color: #f4f6f8;
+    }
+</style>
+
+<div class="container min-vh-100 d-flex flex-column justify-content-center align-items-center">
+    <div class="glass-card">
+        <h2 class="text-center mb-4 text-primary fw-bold">Xếp Lịch</h2>
+
+        <!-- Hiển thị thông báo thành công hoặc lỗi -->
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Message"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group mb-3">
+                <label class="form-label">Chọn Khoa:</label>
+                @Html.DropDownList("MaKhoa", null, "-- Chọn Khoa --", new { @class = "form-control form-select custom-select", @id = "ddlKhoa" })
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Chọn Giảng Viên:</label>
+                <select id="ddlGiangVien" class="form-control form-select custom-select"></select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Chọn Lớp Học Phần:</label>
+                <select id="ddlLopHocPhan" name="maLHP" class="form-control form-select custom-select"></select>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Chọn Phòng Học:</label>
+                @Html.DropDownList("maPhong", null, "-- Chọn Phòng --", new { @class = "form-control form-select custom-select" })
+            </div>
+
+            <button type="submit" class="btn custom-btn">
+                Xếp Lịch
+            </button>
+        }
+
+        <!-- Nút Quay lại -->
+        <a href="@Url.Action("Index", "LichDays")" class="btn back-btn mt-3">
+            ⬅ Quay Lại
+        </a>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ddlKhoa").change(function () {
+                var maKhoa = $(this).val();
+                if (maKhoa) {
+                    $.getJSON('@Url.Action("GetGiangViens")', { maKhoa: maKhoa }, function (data) {
+                        $("#ddlGiangVien").empty();
+                        $("#ddlGiangVien").append('<option value="">-- Chọn Giảng Viên --</option>');
+                        $.each(data, function (i, gv) {
+                            $("#ddlGiangVien").append('<option value="' + gv.MaGV + '">' + gv.TenGV + '</option>');
+                        });
+                    });
+                }
+            });
+
+            $("#ddlGiangVien").change(function () {
+                var maGV = $(this).val();
+                if (maGV) {
+                    $.getJSON('@Url.Action("GetLopHocPhans")', { maGV: maGV }, function (data) {
+                        $("#ddlLopHocPhan").empty();
+                        $("#ddlLopHocPhan").append('<option value="">-- Chọn Lớp Học Phần --</option>');
+                        $.each(data, function (i, lhp) {
+                            $("#ddlLopHocPhan").append('<option value="' + lhp.MaLHP + '">' + lhp.TenMH + '</option>');
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 80px auto;
+        padding: 40px 30px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px 40px 12px 40px; /* Padding cho icon 2 bên */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            height: 45px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form-group i.fa-user,
+        .form-group i.fa-lock {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 18px;
+        }
+
+    .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #888;
+        font-size: 18px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+    .error-message {
+        color: red;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Đăng nhập</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="error-message">@ViewBag.Error</div>
+    }
+
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            <i class="fas fa-user"></i>
+            @Html.TextBox("tenDangNhap", null, new { @placeholder = "Tên đăng nhập", @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            <i class="fas fa-lock"></i> <!-- Icon khoá bên trái -->
+            @Html.Password("matKhau", null, new { @placeholder = "Mật khẩu", @class = "form-control", @id = "password" })
+            <i class="fas fa-eye toggle-password" id="togglePassword"></i> <!-- Icon con mắt bên phải -->
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Đăng nhập</button>
+        </div>
+        <div class="form-group">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-secondary" style="width: 100%; padding: 12px; background-color: #ccc; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease;">
+                Quay lại trang chủ
+            </a>
+        </div>
+
+    }
+</div>
+
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<!-- JavaScript: hiện/ẩn mật khẩu -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            // Kiểm tra hiện tại là password hay text
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+
+            // Đổi icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>

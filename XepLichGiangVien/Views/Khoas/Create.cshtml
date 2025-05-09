@@ -1,0 +1,71 @@
+﻿@model XepLichGiangVien.Models.Khoa
+
+@{
+    ViewBag.Title = "Tạo mới Khoa";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Tạo mới Khoa</h2>
+                </div>
+                <div class="card-body p-4">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "createForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <div class="mb-3">
+                            <label class="form-label" for="MaKhoa">Mã Khoa</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-key"></i>
+                                </span>
+                                @Html.EditorFor(model => model.MaKhoa, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập mã khoa" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.MaKhoa, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" for="TenKhoa">Tên Khoa</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-building"></i>
+                                </span>
+                                @Html.EditorFor(model => model.TenKhoa, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên khoa" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.TenKhoa, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="d-grid mb-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="btnSubmit">
+                                <span id="btnSubmitText">Lưu thông tin</span>
+                                <span id="btnSubmitSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                        <div class="d-grid">
+                            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#createForm').on('submit', function () {
+                $('#btnSubmit').attr('disabled', 'disabled');
+                $('#btnSubmitText').text('Đang lưu...');
+                $('#btnSubmitSpinner').removeClass('d-none');
+            });
+        });
+    </script>
+}

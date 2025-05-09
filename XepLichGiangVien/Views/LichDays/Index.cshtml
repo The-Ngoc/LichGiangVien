@@ -1,0 +1,130 @@
+﻿@model IEnumerable<XepLichGiangVien.Models.LichDay>
+@{
+    ViewBag.Title = "Danh sách Lịch Dạy";
+}
+
+<!-- CSS riêng cho trang Lịch Dạy -->
+<style>
+    .page-title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #2563eb;
+        margin-bottom: 1.5rem;
+    }
+
+    .table thead {
+        background: linear-gradient(to right, #3b82f6, #2563eb);
+        color: white;
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .btn-add {
+        background: linear-gradient(to right, #10b981, #059669);
+        border: none;
+        padding: 10px 20px;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+        .btn-add:hover {
+            background: linear-gradient(to right, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 10px rgba(16, 185, 129, 0.4);
+        }
+
+    .alert {
+        border-radius: 10px;
+        font-size: 1rem;
+    }
+
+    body {
+        background-color: #f9fafb;
+    }
+
+    .table-container {
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style cho ô tìm kiếm */
+    .search-box {
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="page-title text-center">Danh sách Lịch Dạy</h2>
+
+    <!-- Hiển thị thông báo thành công hoặc lỗi -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success text-center">
+            @TempData["Message"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger text-center">
+            @TempData["Error"]
+        </div>
+    }
+
+    <div class="d-flex justify-content-end mb-3">
+        @Html.ActionLink("➕ Xếp lịch mới", "XepLich", null, new { @class = "btn btn-add" })
+    </div>
+
+    <!-- Ô tìm kiếm -->
+    <input type="text" id="searchInput" class="form-control search-box" placeholder="🔍 Tìm kiếm Lớp học phần, Giảng viên...">
+
+    <div class="table-container">
+        <table class="table table-striped table-hover table-bordered" id="lichDayTable">
+            <thead>
+                <tr>
+                    <th>Lớp Học Phần</th>
+                    <th>Giảng Viên</th>
+                    <th>Phòng</th>
+                    <th>Thứ</th>
+                    <th>Tiết</th>
+                    <th>Tuần</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.LopHocPhan.TenMH (@item.MaLHP)</td>
+                        <td>@item.LopHocPhan.GiangVien.TenGV</td>
+                        <td>@item.PhongHoc.TenPhong</td>
+                        <td>Thứ @item.Thu</td>
+                        <td>@($"Tiết {item.TietBatDau} - {item.TietKetThuc}")</td>
+                        <td>@($"Tuần {item.TuanBatDau} - {item.TuanKetThuc}")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- jQuery để xử lý tìm kiếm -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#lichDayTable tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

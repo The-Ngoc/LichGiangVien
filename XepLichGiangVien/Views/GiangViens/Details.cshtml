@@ -1,0 +1,27 @@
+﻿@model XepLichGiangVien.Models.GiangVien
+
+@{
+    ViewBag.Title = "Chi Tiết Giảng Viên";
+}
+
+<div class="container my-5">
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-header bg-gradient bg-primary text-white rounded-top-4">
+            <h2 class="mb-0"><i class="bi bi-person-badge-fill me-2"></i>Chi Tiết Giảng Viên</h2>
+        </div>
+        <div class="card-body p-5">
+            <dl class="row fs-5">
+                <dt class="col-md-4 text-muted">Tên Giảng Viên</dt>
+                <dd class="col-md-8 fw-bold">@Html.DisplayFor(model => model.TenGV)</dd>
+
+                <dt class="col-md-4 text-muted">Khoa</dt>
+                <dd class="col-md-8 fw-bold">@Html.DisplayFor(model => model.Khoa.TenKhoa)</dd>
+            </dl>
+
+            <div class="mt-5 d-flex gap-3">
+                @Html.ActionLink("✏️ Chỉnh sửa", "Edit", new { id = Model.MaGV }, new { @class = "btn btn-warning btn-lg rounded-pill px-4 shadow-sm" })
+                @Html.ActionLink("↩️ Quay lại danh sách", "Index", null, new { @class = "btn btn-outline-secondary btn-lg rounded-pill px-4 shadow-sm" })
+            </div>
+        </div>
+    </div>
+</div>

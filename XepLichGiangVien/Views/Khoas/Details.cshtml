@@ -1,0 +1,31 @@
+﻿@model XepLichGiangVien.Models.Khoa
+
+@{
+    ViewBag.Title = "Chi Tiết Khoa";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow rounded-4 border-0">
+                <div class="card-header bg-info text-white text-center rounded-top-4">
+                    <h2 class="mb-0">Thông Tin Khoa</h2>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4 text-end fw-bold">
+                            Tên Khoa
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.TenKhoa)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.MaKhoa }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

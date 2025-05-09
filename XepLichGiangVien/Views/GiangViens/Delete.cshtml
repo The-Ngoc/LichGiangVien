@@ -1,0 +1,36 @@
+﻿@model XepLichGiangVien.Models.GiangVien
+
+@{
+    ViewBag.Title = "Delete Giảng Viên";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-header bg-danger text-white">
+            <h2 class="mb-0">Xóa Giảng Viên</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title mb-4">Bạn có chắc chắn muốn xóa giảng viên này không?</h5>
+
+            <dl class="row">
+                <dt class="col-sm-3">Tên Giảng Viên</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.TenGV)</dd>
+
+                <dt class="col-sm-3">Khoa</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Khoa.TenKhoa)</dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash-fill"></i> Xóa
+                    </button>
+                    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<XepLichGiangVien.Models.LopHocPhan>
+
+@{
+    ViewBag.Title = "Danh sách Lớp Học Phần";
+}
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-journal-bookmark-fill me-2"></i>Danh sách Lớp Học Phần</h2>
+        @Html.ActionLink("➕ Thêm mới", "Create", null, new { @class = "btn btn-success btn-lg rounded-pill shadow-sm" })
+    </div>
+
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th class="text-center">Tên Môn Học</th>
+                        <th class="text-center">Số Tín Chỉ</th>
+                        <th class="text-center">Số Tiết Mỗi Tuần</th>
+                        <th class="text-center">Giảng Viên</th>
+                        <th class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.TenMH)</td>
+                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.SoTinChi)</td>
+                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.SoTietMoiTuan)</td>
+                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.GiangVien.TenGV)</td>
+                            <td class="align-middle text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    @Html.ActionLink("✏️", "Edit", new { id = item.MaLHP }, new { @class = "btn btn-warning btn-sm rounded-pill" })
+                                    @Html.ActionLink("🔍", "Details", new { id = item.MaLHP }, new { @class = "btn btn-info btn-sm rounded-pill text-white" })
+                                    @Html.ActionLink("🗑️", "Delete", new { id = item.MaLHP }, new { @class = "btn btn-danger btn-sm rounded-pill" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
