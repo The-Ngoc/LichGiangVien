@@ -10,7 +10,7 @@ namespace XepLichGiangVien.Controllers
 {
     public class HomeController : Controller
     {
-        private XepLichGiangVienEntities db = new XepLichGiangVienEntities();
+        private AppDBContext db = new AppDBContext();
         public ActionResult Index()
         {
             return View();
