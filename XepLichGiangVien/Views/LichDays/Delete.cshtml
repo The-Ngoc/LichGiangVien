@@ -1,0 +1,61 @@
+@model XepLichGiangVien.Models.LichDay
+
+@{
+    ViewBag.Title = "Xóa Lịch Dạy";
+}
+
+<div class="container mt-5">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white text-center">
+            <h2><i class="fas fa-exclamation-triangle"></i> Xác nhận xóa lịch dạy</h2>
+        </div>
+        <div class="card-body text-center">
+            <p class="text-danger font-weight-bold">Bạn có chắc chắn muốn xóa lịch dạy này không?</p>
+
+            <table class="table table-bordered mt-4">
+                <tr>
+                    <th>Lớp Học Phần</th>
+                    <td>@Model.LopHocPhan.TenMH</td>
+                </tr>
+                <tr>
+                    <th>Giảng Viên</th>
+                    <td>@Model.LopHocPhan.GiangVien.TenGV</td>
+                </tr>
+                <tr>
+                    <th>Phòng</th>
+                    <td>@Model.PhongHoc.TenPhong</td>
+                </tr>
+                <tr>
+                    <th>Thứ</th>
+                    <td>Thứ @Model.Thu</td>
+                </tr>
+                <tr>
+                    <th>Tiết</th>
+                    <td>Tiết @Model.TietBatDau - @Model.TietKetThuc</td>
+                </tr>
+                <tr>
+                    <th>Tuần</th>
+                    <td>Tuần @Model.TuanBatDau - @Model.TuanKetThuc</td>
+                </tr>
+            </table>
+
+            <div class="mt-4">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.MaLich" />
+
+                    <button type="submit" class="btn btn-danger btn-lg mr-2">
+                        <i class="fas fa-trash-alt"></i> Xác nhận xóa
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Quay lại
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Link Font Awesome để dùng icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
