@@ -56,7 +56,7 @@ namespace XepLichGiangVien.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaGV,TenGV,MaKhoa,Email,SoDienThoai")] GiangVien giangVien)
+        public ActionResult Create([Bind(Include = "MaGV,TenGV,MaKhoa,Email,SDT")] GiangVien giangVien)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace XepLichGiangVien.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaGV,TenGV,MaKhoa,Email,SoDienThoai")] GiangVien giangVien)
+        public ActionResult Edit([Bind(Include = "MaGV,TenGV,MaKhoa,Email,SDT")] GiangVien giangVien)
         {
             if (ModelState.IsValid)
             {
