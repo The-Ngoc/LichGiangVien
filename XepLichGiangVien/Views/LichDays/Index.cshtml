@@ -1,4 +1,4 @@
-﻿@model IEnumerable<XepLichGiangVien.Models.LichDay>
+@model IEnumerable<XepLichGiangVien.Models.LichDay>
 @{
     ViewBag.Title = "Danh sách Lịch Dạy";
 }
@@ -95,18 +95,22 @@
                     <th>Thứ</th>
                     <th>Tiết</th>
                     <th>Tuần</th>
+                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.LopHocPhan.TenMH (@item.MaLHP)</td>
+                        <td>@item.LopHocPhan.TenMH</td>
                         <td>@item.LopHocPhan.GiangVien.TenGV</td>
                         <td>@item.PhongHoc.TenPhong</td>
                         <td>Thứ @item.Thu</td>
                         <td>@($"Tiết {item.TietBatDau} - {item.TietKetThuc}")</td>
                         <td>@($"Tuần {item.TuanBatDau} - {item.TuanKetThuc}")</td>
+                        <td>
+                            @Html.ActionLink("🗑️ Xóa", "Delete", new { id = item.MaLich }, new { @class = "btn btn-danger btn-sm" })
+                        </td>
                     </tr>
                 }
             </tbody>
