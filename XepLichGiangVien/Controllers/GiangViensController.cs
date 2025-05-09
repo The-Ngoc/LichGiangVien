@@ -12,7 +12,7 @@ namespace XepLichGiangVien.Controllers
 {
     public class GiangViensController : Controller
     {
-        private XepLichGiangVienEntities db = new XepLichGiangVienEntities();
+        private AppDBContext db = new AppDBContext();
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Session["MaVaiTro"] == null || (int)Session["MaVaiTro"] != 0)
