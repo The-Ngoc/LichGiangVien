@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -12,11 +12,12 @@ namespace XepLichGiangVien.Controllers
 {
     public class GiangViensController : Controller
     {
-        private AppDBContext db = new AppDBContext();
+        private XepLichGiangVienEntities db = new XepLichGiangVienEntities();
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Session["MaVaiTro"] == null || (int)Session["MaVaiTro"] != 0)
             {
+                // Không phải GiaoVu thì chuyển về trang login
                 filterContext.Result = RedirectToAction("Login", "Home");
             }
             base.OnActionExecuting(filterContext);
@@ -55,7 +56,7 @@ namespace XepLichGiangVien.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaGV,TenGV,MaKhoa")] GiangVien giangVien)
+        public ActionResult Create([Bind(Include = "MaGV,TenGV,MaKhoa,Email,SoDienThoai")] GiangVien giangVien)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +90,7 @@ namespace XepLichGiangVien.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaGV,TenGV,MaKhoa")] GiangVien giangVien)
+        public ActionResult Edit([Bind(Include = "MaGV,TenGV,MaKhoa,Email,SoDienThoai")] GiangVien giangVien)
         {
             if (ModelState.IsValid)
             {
