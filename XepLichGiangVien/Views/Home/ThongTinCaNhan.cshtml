@@ -1,0 +1,42 @@
+@model XepLichGiangVien.Models.GiangVien
+
+@{
+    ViewBag.Title = "Thông Tin Cá Nhân";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <!-- Giới hạn chiều rộng đẹp hơn -->
+            <div class="card shadow-lg rounded-4">
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+                    <h4 class="mb-0"><i class="bi bi-person-vcard"></i> Thông Tin Cá Nhân</h4>
+                </div>
+                <div class="card-body px-4 py-3">
+                    <dl class="row gy-2">
+                        <!-- gy-2 tạo khoảng cách giữa các dòng -->
+                        <dt class="col-5 text-muted text-end">Mã giảng viên</dt>
+                        <dd class="col-7 fw-semibold">@Model.MaGV</dd>
+
+                        <dt class="col-5 text-muted text-end">Họ tên</dt>
+                        <dd class="col-7">@Model.TenGV</dd>
+
+                        <dt class="col-5 text-muted text-end">Email</dt>
+                        <dd class="col-7">@Model.Email</dd>
+
+                        <dt class="col-5 text-muted text-end">Số điện thoại</dt>
+                        <dd class="col-7">@Model.SoDienThoai</dd>
+
+                        <dt class="col-5 text-muted text-end">Khoa</dt>
+                        <dd class="col-7">@Model.Khoa.TenKhoa</dd>
+                    </dl>
+                </div>
+                <div class="card-footer bg-light text-end rounded-bottom-4">
+                    <a href="@Url.Action("GiangVien", "Home")" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
