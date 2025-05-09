@@ -1,42 +1,42 @@
-﻿@model IEnumerable<XepLichGiangVien.Models.GiangVien>
-
+@model IEnumerable<XepLichGiangVien.Models.GiangVien>
 @{
     ViewBag.Title = "Danh sách Giảng Viên";
 }
 
-<div class="container my-5">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+<div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold"><i class="bi bi-people-fill me-2"></i>Danh sách Giảng Viên</h2>
-        @Html.ActionLink("➕ Thêm mới", "Create", null, new { @class = "btn btn-success btn-lg rounded-pill shadow-sm" })
+        <h2 class="mb-0"><i class="bi bi-people-fill me-2"></i>Danh sách Giảng Viên</h2>
+        @Html.ActionLink("➕ Thêm Giảng Viên", "Create", null, new { @class = "btn btn-primary" })
     </div>
 
-    <div class="card shadow-lg rounded-4 border-0">
-        <div class="card-body p-0">
-            <table class="table table-hover table-striped mb-0">
-                <thead class="table-primary">
-                    <tr>
-                        <th class="text-center">Tên Giảng Viên</th>
-                        <th class="text-center">Khoa</th>
-                        <th class="text-center">Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.TenGV)</td>
-                            <td class="align-middle text-center">@Html.DisplayFor(modelItem => item.Khoa.TenKhoa)</td>
-                            <td class="align-middle text-center">
-                                <div class="d-flex justify-content-center gap-2">
-                                    @Html.ActionLink("✏️", "Edit", new { id = item.MaGV }, new { @class = "btn btn-warning btn-sm rounded-pill" })
-                                    @Html.ActionLink("🔍", "Details", new { id = item.MaGV }, new { @class = "btn btn-info btn-sm rounded-pill text-white" })
-                                    @Html.ActionLink("🗑️", "Delete", new { id = item.MaGV }, new { @class = "btn btn-danger btn-sm rounded-pill" })
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-primary">
+            <tr>
+                <th>Tên Giảng Viên</th>
+                <th>Email</th>
+                <th>Số Điện Thoại</th>
+                <th>Khoa</th>
+                <th class="text-center">Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.TenGV)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Khoa.TenKhoa)</td>
+                    <td class="text-center">
+                        @Html.ActionLink("✏️ Sửa", "Edit", new { id = item.MaGV }, new { @class = "btn btn-sm btn-outline-warning me-1" })
+                        @Html.ActionLink("👁️ Chi tiết", "Details", new { id = item.MaGV }, new { @class = "btn btn-sm btn-outline-info me-1" })
+                        @Html.ActionLink("🗑️ Xoá", "Delete", new { id = item.MaGV }, new { @class = "btn btn-sm btn-outline-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
